@@ -1,0 +1,62 @@
+
+openapi: 3.0.0
+info:
+  title: Identity API
+  description: API description in Markdown.
+  version: 1.0.0
+servers: [
+  {
+    url: http://localhost:3000/v1,
+    description: "Development Server"
+  }
+]
+paths:
+  "/login": {
+    "post": {
+      "description": "",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": ["username", "password"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "User has been authenticated successfully",
+          "content": {
+            "application/json": {}
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {}
+          }
+        },
+        "401": {
+          "description": "Invalid username or password",
+          "content": {
+            "application/json": {}
+          }
+        },
+        "500": {
+          "description": "Unexpected Error",
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    }
+  }

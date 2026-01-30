@@ -24,7 +24,7 @@ A basic identity management system with pre-existing credentials, that handles u
     group mygroup(cloud) [Environment]
 
     service web-server(server) [Web Server] in mygroup
-    service rest-api(server) [Rest API] in mygroup
+    service rest-api(server) [Identity API] in mygroup
     service my-db(database) [Database] in mygroup
 
     web-server:R <--> L:rest-api
