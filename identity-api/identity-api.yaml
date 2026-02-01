@@ -13,7 +13,7 @@ servers: [
 paths:
   "/login": {
     "post": {
-      "description": "",
+      "description": "handles user authentication",
       "requestBody": {
         "content": {
           "application/json": {
