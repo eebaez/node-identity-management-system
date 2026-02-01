@@ -1,6 +1,6 @@
 # Node: Identity API
 
-Handles HTTP request on port 3000 for user authentication
+Restful API that handles user authentication
 
 ## Technologies
 - Developed using NodeJS v24
