@@ -8,7 +8,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --env-file=.env ./src/server"
+    "start": "node --env-file=.env ./src/server",
+    "docker-build": "docker build -t node-identity-api .",
+    "docker-run": "docker run --name identity-api -p 3000:3000 node-identity-api",
+    "docker-destroy": "docker container stop identity-api && docker container rm identity-api"
   },
   "dependencies": {
     "argon2": "^0.44.0"

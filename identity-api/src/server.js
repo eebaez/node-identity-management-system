@@ -40,6 +40,14 @@ const parseRawBodyToJSON = (rawBody) => {
     return result;
 };
 
+const writeResponse = (response, method, url, statusCode) => {
+    response.setHeader("Content-Type", "application/json");
+    response.statusCode = statusCode;
+    response.end();
+
+    console.log(`Response: ${method} ${url} - statusCode:${statusCode}`);    
+};
+
 /*  Use Cases:
 * - undefined endpoint e.g. /home -> return 404
 * - POST /login without parameters -> return 400
@@ -55,17 +63,11 @@ server.on("request", (request, response) =>{
     // handle bad request
     request.on("error", err => {
         console.error(err);
-        response.setHeader("Content-Type", "application/json");
-        response.statusCode = 400;
-        response.end();
+        writeResponse(response, method, url, 400);
     });
 
     response.on("error", err => {
         console.error(err);
-    });
-
-    request.on("close", () => {
-        console.log(`Response: ${method} ${url} - statusCode:${response.statusCode}`);
     });
 
     // handle request
@@ -84,43 +86,30 @@ server.on("request", (request, response) =>{
 
                 if(username === undefined || username == "" 
                     || password === undefined || password == "") {
-
-                        response.setHeader("Content-Type", "application/json");
-                        response.statusCode = 400;
-                        response.end();
+                        writeResponse(response, method, url, 400);
                     }
                 else {
 
                     // User authentication
                     authHandler.userAuthentication(username, password).then((authResult) => {
                         if(authResult.authenticated) {
-                            response.setHeader("Content-Type", "application/json");
-                            response.statusCode = 200;
-                            response.end();
+                            writeResponse(response, method, url, 200);
                         } else {
-                            response.setHeader("Content-Type", "application/json");
-                            response.statusCode = 401;
-                            response.end();
+                            writeResponse(response, method, url, 401);
                         }
                     }).catch((err) => {
                         console.error(err);
-                        response.setHeader("Content-Type", "application/json");
-                        response.statusCode = 401;
-                        response.end();
+                        writeResponse(response, method, url, 401);
                     });
                 }
             } else {
-                response.setHeader("Content-Type", "application/json");
-                response.statusCode = 400;
-                response.end();
+                writeResponse(response, method, url, 400);
             }
         });
 
     } else {
         // handle invalid url
-        response.setHeader("Content-Type", "application/json");
-        response.statusCode = 404;
-        response.end();
+        writeResponse(response, method, url, 404);
     }
 });
 
